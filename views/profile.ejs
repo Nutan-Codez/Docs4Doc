@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/profile.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <div class="pace">
+            <div class="pace-progress"></div>
+        </div>
+        <div class="navbar-inner">
+            <div class="navbar-left">
+                <div id="nav-icon3">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <img id="nb-u-ico" class="navbar-user-icon" src="../images/uploads/<%=user.profileImage%>" alt="">
+            </div>
+        </div>
+    </nav>
+    <ul id="usermenu">
+        <div class="arrow"></div>
+        <li class="usermenu-link-wrap"><a class="usermenu-link">
+                <div class="usermenu-link-left"><i class="uil uil-pen"></i></div>
+                <a href="/profilechange" style="text-decoration: none;">
+                    <div style="color: #ffffff;" class="usermenu-link-right">Edit Profile Picture</div>
+                </a>
+            </a>
+        </li>
+        <li class="usermenu-link-wrap"><a style="text-align: left;" class="usermenu-link" href="/logout">
+                <div class="usermenu-link-left"><i class="uil uil-video"></i></div>
+                <div class="usermenu-link-right">LOGOUT</div>
+            </a>
+        </li>
+    </ul>
+    <div id="menu" class="menu">
+        <div class="menu-inner">
+
+            <div class="menu-sec">
+                <ul class="menu-links">
+
+                    <li class="menu-link"><a style="text-decoration: none; color:#ffffff;" class="menu-link-icon" href="/profile?state=0"><i
+                                class="uil uil-folder-open"></i>Report</a></li>
+                    <li class="menu-link"><a style="text-decoration: none; color:#ffffff;" class="menu-link-icon" href="/profile?state=2"><i
+                                class="uil uil-folder-open"></i>Allergies</a></li>
+                    <li class="menu-link"><a style="text-decoration: none; color:#ffffff;" class="menu-link-icon" href="/profile?state=1"><i
+                                class="uil uil-folder-open"></i>Bio</a></li>
+                </ul>
+            </div>
+
+
+            <div class="menu-sec-bottom">
+                <a class="menu-text-small" href="/">Home</a>
+                <a class="menu-text-small" href="/about">About Us</a>
+
+            </div>
+            <p class="menu-text">&copy Docs4doc</p>
+        </div>
+    </div>
+    <main>
+        <div class="user-header-wrapper">
+            <div class="user-icon-wrapper">
+                <img class="user-icon" src="../images/uploads/<%=user.profileImage%>" alt="">
+            </div>
+            <div class="user-header-inner">
+                <div class="user-header-overlay"></div>
+                <img class="user-header" src="../images/health2.png" alt="">
+            </div>
+        </div>
+        <div class="user-info-bar">
+            <div class="ufo-bar-col1">
+
+            </div>
+            <div class="ufo-bar-col2">
+                <div class="ufo-bar-col2-inner">
+                    <div class="username-wrapper">
+                        <div class="verified">
+                            <p>Verified Account</p>
+                        </div>
+                        <h1 class="username">
+                            <%=user.username%>
+                        </h1>
+                        <svg class="username-verified" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350.03 1326.16">
+                            <defs>
+                                <style>
+                                    .cls-11 {
+                                        fill: var(--primary);
+                                    }
+
+                                    .cls-12 {
+                                        fill: #ffffff;
+                                    }
+                                </style>
+                            </defs>
+                            <title>verified</title>
+                            <g id="Layer_3" data-name="Layer 3">
+                                <polygon class="cls-11"
+                                    points="0 747.37 120.83 569.85 70.11 355.04 283.43 292.38 307.3 107.41 554.93 107.41 693.66 0 862.23 120.83 1072.57 126.8 1112.84 319.23 1293.35 399.79 1256.05 614.6 1350.03 793.61 1197.87 941.29 1202.35 1147.15 969.64 1178.48 868.2 1326.16 675.02 1235.17 493.77 1315.72 354.99 1133.73 165.58 1123.29 152.16 878.64 0 747.37" />
+                            </g>
+                            <g id="Layer_2" data-name="Layer 2">
+                                <path class="cls-12"
+                                    d="M755.33,979.23s125.85,78.43,165.06,114c34.93-36,234.37-277.22,308.24-331.94,54.71,21.89,85,73.4,93,80.25-3.64,21.89-321.91,418.58-368.42,445.94-32.74-3.84-259-195.16-275.4-217C689.67,1049.45,725.24,1003.85,755.33,979.23Z"
+                                    transform="translate(-322.83 -335.95)" />
+                            </g>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+            <div class="ufo-bar-col5">
+                <div class="ufo-bar-col5-inner">
+                    <a href="/upload"><button class="button2 btn-primary2"><i class="uil uil-plus"></i> Upload<div
+                                class="btn-secondary2"></div></button></a>
+                </div>
+            </div>
+        </div>
+        <div class="user-info-bar2">
+            <a href="/profile?state=0" class="ufo-bar2-col1" style="text-decoration: none;">
+                <div class="ufo-bar2-col1-inner flexbox">
+                    <h3 style="color:#4dffe4;">REPORTS</h3>
+                </div>
+            </a>
+
+            <div class="ufo-bar2-col2 ufo-bar2-block">
+                <!-- Content for Videos -->
+            </div>
+
+            <a href="/profile?state=2" class="ufo-bar2-col3 ufo-bar2-block" style="text-decoration: none;">
+                <div class="ufo-bar2-col3-inner flexbox">
+                    <h3 style="color:#4dffe4;">ALLERGIES</h3>
+                </div>
+            </a>
+
+            <div class="ufo-bar2-col4 ufo-bar2-block">
+                <!-- Content for Playlists -->
+            </div>
+
+            <a href="/profile?state=1" class="ufo-bar2-col5" style="text-decoration: none;">
+                <div class="ufo-bar2-col5-inner flexbox">
+                    <h3 style="color: #4dffe4;">BIO</h3>
+                </div>
+            </a>
+        </div>
+
+        <div class="user-info-block" id="dynamic-content">
+            <!-- Conditionally include partials based on state -->
+            <% if (state==0) { %>
+                <%- include('./partials/prescriptions') %>
+                    <% } else if (state==1) { %>
+                        <%- include('./partials/show-bio') %>
+                            <% } else if (state==2) { %>
+                                <%- include('./partials/allergies') %>
+                                    <% } %>
+        </div>
+
+
+    </main>
+    <footer id="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a class="footer-mail">Find us everywhere.</a>
+            </div>
+            <div class="footer-right">
+                <div class="footer-links">
+                    <a class="footer-link fl-first" href="https://www.youtube.com/ArealAlien"
+                        target="_blank">YouTube.</a>
+                    <a class="footer-link" href="https://twitter.com/Areal_Alien" target="_blank">Twitter.</a>
+                    <a class="footer-link" href="https://www.instagram.com/areal_alien/" target="_blank">Instagram.</a>
+                    <a class="footer-link fl-last" href="" target="_blank">About Us.</a>
+                </div>
+                <div class="footer-text">
+                    <p>Website &copy 2020 - 2020</p>
+                    <p>Made with ♥ by Areal Alien</p>
+                </div>
+                <div class="footer-sites">
+                    <a>Cookie Policy.</a> | <a href="https://www.unsplash.com" target="_blank">Unsplash.</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $(window).click(function () {
+            const umenu = document.getElementById("usermenu");
+            if (umenu.style.display === "flex") {
+                umenu.style.animation = "usermenuhide .1s ease-in-out both";
+                setTimeout(function () {
+                    umenu.style.display = "none";
+                }, uMneuDelayInMilliseconds);
+            }
+        });
+    </script>
+
+    <script>
+        var uMneuDelayInMilliseconds = 100;
+        const umenu = document.getElementById("usermenu");
+
+        $('#nb-u-ico').click(function (event) {
+            event.stopPropagation();
+            if (umenu.style.display === "none" || umenu.style.display == "") {
+                umenu.style.display = "flex";
+                umenu.style.animation = "usermenushow .1s ease-in-out";
+            } else {
+                umenu.style.animation = "usermenuhide .1s ease-in-out both";
+                setTimeout(function () {
+                    umenu.style.display = "none";
+                }, uMneuDelayInMilliseconds);
+            }
+        });
+    </script>
+
+    <script>
+        var MneuDelayInMilliseconds = 200;
+        $('#nav-icon3').click(function (event) {
+            event.stopPropagation();
+            if ($("#nav-icon3").hasClass('open')) {
+                $('#nav-icon3').toggleClass('open');
+                $('#menu').css("animation", "menuhide .2s ease-in-out forwards");
+                setTimeout(function () {
+                    $('#menu').css("display", "none");
+                }, MneuDelayInMilliseconds);
+            } else {
+                $('#nav-icon3').toggleClass('open');
+                $('#menu').css("display", "flex");
+                $('#menu').css("animation", "menushow .2s ease-in-out");
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var hidden1 = 0;
+            $("#showmore1").click(function () {
+                if (hidden1 == 0) {
+                    $(".hidden-links").show();
+                    document.getElementById("showmore1").innerHTML = "<a class='menu-link-icon'><i class=\"uil uil-angle-up\"></i></a>Show less";
+                    hidden1 = 1;
+                } else {
+                    $(".hidden-links").hide();
+                    document.getElementById("showmore1").innerHTML = "<a class='menu-link-icon'><i class=\"uil uil-angle-down\"></i></a>Show more";
+                    hidden1 = 0;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var hidden1 = 0;
+            $("#showmore2").click(function () {
+                if (hidden1 == 0) {
+                    $(".hidden-links2").show();
+                    document.getElementById("showmore2").innerHTML = "<a class='menu-link-icon'><i class=\"uil uil-angle-up\"></i></a>Show less";
+                    hidden1 = 1;
+                } else {
+                    $(".hidden-links2").hide();
+                    document.getElementById("showmore2").innerHTML = "<a class='menu-link-icon'><i class=\"uil uil-angle-down\"></i></a>Show more";
+                    hidden1 = 0;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(".username-wrapper").on({
+            mouseenter: function () {
+                $(".verified").css("opacity", "1");
+                $(".verified").css("top", "115%");
+            },
+            mouseleave: function () {
+                $(".verified").css("opacity", "0");
+                $(".verified").css("top", "150%");
+            }
+        });
+    </script>
+</body>
+
+</html>

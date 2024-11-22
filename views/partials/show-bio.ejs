@@ -1,0 +1,33 @@
+<!-- views/profile.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Include your CSS file here -->
+</head>
+<body>
+    <h1>User Profile</h1>
+    <div class="profile-card">
+        <h2>Bio Information</h2>
+        <p><strong>Doctor's Name:</strong> <%= user.bio.doctor.name %></p>
+        <p><strong>Doctor's Contact Number:</strong> <%= user.bio.doctor.contactNumber %></p>
+        <p><strong>Date of Birth:</strong> <% 
+            var dateOfBirth = new Date(user.bio.dateOfBirth); // Adjust the field name if needed
+            
+            // Extract date components
+            var day = dateOfBirth.getDate(); // Day of the month
+            var month = dateOfBirth.getMonth() + 1; // Month (0-based index, so +1)
+            var year = dateOfBirth.getFullYear(); // Full year
+            
+            // Format the date as DD-MM-YYYY
+            var formattedDate = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
+        %>
+        <%= formattedDate %></p>
+        <p><strong>Age:</strong> <%= user.bio.age %></p>
+        <p><strong>Aadhar Number:</strong> <%= user.bio.aadharNumber %></p>
+        <p><strong>Contact Number:</strong> <%= user.bio.contactNumber %></p>
+    </div>
+</body>
+</html>

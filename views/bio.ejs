@@ -1,0 +1,41 @@
+<!-- views/bio.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio Information</title>
+    <link rel="stylesheet" href="../stylesheets/bio.css"> <!-- Include your CSS file here -->
+</head>
+
+<body>
+
+    <div>
+        <h1>Enter Bio Information</h1>
+        <form action="/bio" method="POST">
+            <label for="doctorName">Doctor's Name:</label>
+            <input type="text" id="doctorName" name="doctorName" required>
+
+            <label for="doctorContactNumber">Doctor's Contact Number:</label>
+            <input type="text" id="doctorContactNumber" name="doctorContactNumber" pattern="\d{10}"
+                title="Contact Number should be 10 digits" optional>
+
+
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+            <label for="aadharNumber">Aadhar Number:</label>
+            <input type="text" id="aadharNumber" name="aadharNumber" pattern="\d{12}"
+                title="Aadhar Number should be 12 digits" required>
+
+            <label for="contactNumber">Contact Number:</label>
+            <input type="text" id="contactNumber" name="contactNumber" pattern="\d{10}"
+                title="Contact Number should be 10 digits">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

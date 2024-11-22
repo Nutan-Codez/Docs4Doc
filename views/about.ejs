@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Start Global Rules */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      /*font-family: 'Open Sans', sans-serif;*/
+      font-family: "Oleo Script", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Small */
+    @media (min-width: 768px) {
+      .container {
+        width: 750px;
+      }
+    }
+
+    /* Medium */
+    @media (min-width: 992px) {
+      .container {
+        width: 970px;
+      }
+    }
+
+    /* Large */
+    @media (min-width: 1200px) {
+      .container {
+        width: 1170px;
+      }
+    }
+
+    /* End Global Rules */
+
+    /* Start Landing Page */
+    .landing-page header {
+      min-height: 80px;
+      display: flex;
+    }
+
+    @media (max-width: 767px) {
+      .landing-page header {
+        min-height: auto;
+        display: initial;
+      }
+    }
+
+    .landing-page header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 767px) {
+      .landing-page header .container {
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    .landing-page header .logo {
+      color: #ffffff;
+      font-style: italic;
+      text-transform: uppercase;
+      font-size: 20px;
+    }
+
+    @media (max-width: 767px) {
+      .landing-page header .logo {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .landing-page header .links {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 767px) {
+      .landing-page header .links {
+        text-align: center;
+        gap: 10px;
+      }
+    }
+
+    .landing-page header .links li {
+      margin-left: 30px;
+      color: #ffffff;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    @media (max-width: 767px) {
+      .landing-page header .links li {
+        margin-left: auto;
+      }
+    }
+
+    .landing-page header .links li:last-child {
+      font-family: 'Open Sans', sans-serif;
+      border-radius: 20px;
+      padding: 10px 20px;
+      color: #000000;
+      background-color: #ffffff;
+      border: solid 1px #000000;
+    }
+
+    .landing-page header .links li:hover{
+      background-color: #000000;
+      color: white;
+      transition: 0.5s;
+    }
+
+    .landing-page header .links li:not(:last-child):hover {
+      color: #6c63ff;
+    }
+
+    .landing-page .content .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 140px;
+      min-height: calc(100vh - 80px);
+    }
+
+    @media (max-width: 767px) {
+      .landing-page .content .container {
+        gap: 0;
+        min-height: calc(100vh - 101px);
+        justify-content: center;
+        flex-direction: column-reverse;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .landing-page .content .info {
+        text-align: center;
+        margin-bottom: 15px
+      }
+    }
+
+    .landing-page .content .info h1 {
+      color: #ffffff;
+      font-size: 50px;
+    }
+
+    .landing-page .content .info p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    .landing-page .content .info button {
+      border: solid 1px #000000;
+      border-radius: 20px;
+      padding: 12px 30px;
+      margin-top: 30px;
+      cursor: pointer;
+      color: #000000;
+      background-color: #ffffff;
+    }
+
+    .landing-page .content .image img {
+      max-width: 100%;
+    }
+
+    @keyframes body {
+      0% {
+        background-position: 0 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0 50%;
+      }
+    }
+
+    body {
+      background: linear-gradient(to right,
+
+          #f74d4d,
+          #f7a74d,
+          #f7e14d,
+          #a4f74d,
+          #4df7a7,
+          #4df7e1,
+          #4d7af7,
+          #6d4df7,
+          #9e4df7,
+          #d14df7);
+      background-size: 400% 400%;
+      animation: body 10s infinite ease-in-out;
+
+    }
+
+    /* End Landing Page */
+  </style>
+</head>
+
+<body>
+  <!-- Start Landing Page -->
+  <div class="landing-page">
+    <header>
+      <div class="container">
+        <a href="#" class="logo"><b>Docs4Doc</b></a>
+        <ul class="links">
+          <a href="/">
+            <li>Home</li>
+          </a>
+          <a href="/about">
+            <li>About Us</li>
+          </a>
+          <a href="/profile">
+            <li>Profile</li>
+          </a>
+
+          <a href="/login">
+            <li>Login</li>
+          </a>
+        </ul>
+      </div>
+    </header>
+    <div class="content">
+      <div class="container">
+        <div class="info">
+          <h1>About</h1>
+          <p>Doc4Docs is a web application designed to address these challenges by 
+            providing a secure and user-friendly platform for storing and managing 
+            medical documents. <br> <br> This application aims to: <br>
+            Enable patients to upload, store, and organize their medical records 
+            and documents digitally, ensuring they are never lost and can be 
+            accessed anytime, anywhere. <br>
+            Allow doctors to save, access, and manage their patients' medical 
+            records efficiently, enhancing their ability to provide timely and 
+            accurate medical care. <br>
+            Serve as a comprehensive solution for both government and 
+            private healthcare organizations, facilitating better healthcare 
+            management and record-keeping practices. <br>
+            Provide a user experience similar to the DigiLocker app, ensuring 
+            familiarity and ease of use for users. <br> <br>
+            By implementing Doc4Docs, we aim to streamline the medical record 
+            management process, improve the quality of healthcare services, and 
+            ensure the safety and accessibility of medical documents for both patients 
+            and healthcare providers. <br><br><br>
+            </p>
+        </div>
+        <div class="image">
+          <img height="300px" width="700px" src="../images/vector1.jpeg">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Landing Page -->
+</body>
+
+</html>

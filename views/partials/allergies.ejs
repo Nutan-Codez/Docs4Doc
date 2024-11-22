@@ -1,0 +1,16 @@
+<% if (user.allergies.length> 0) { %>
+    <ul><strong>Allergies</strong>
+        <% user.allergies.forEach(function(allergy) { %>
+            <li>
+                <%= allergy %>
+            </li>
+            <% }); %>
+    </ul>
+    <% } else { %>
+        NO Allergies
+        <% } %>
+            <form action="/add-allergies" method="post">
+                <label for="allergy">Allergy</label>
+                <input type="text" id="allergy" name="allergy">
+                <input type="submit" value="submit">
+            </form>
