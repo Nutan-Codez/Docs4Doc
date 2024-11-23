@@ -1,89 +1,128 @@
 const express = require('express');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const Doctor = require('./models/doctors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Doctor = require('./models/doctors'); // Ensure this file contains the Doctor schema
+const User = require('./models/users'); // Assuming this file contains the User schema
+const File = require('./models/file'); // Assuming this file contains the File schema
+const Bio = require('./models/bio'); 
 const router = express.Router();
 
-// Middleware to check if the user is authenticated as a doctor
-function isDoctor(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next(); // Proceed to the next middleware or route handler
-  } else {
-    return res.redirect('/doctor/login'); // Redirect to login page if not authenticated
+// Middleware for parsing JSON and form data
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+
+// Simulated logged doctor (simple variable for session-like behavior)
+let loggedDoctor = null;
+
+// Middleware to check if a doctor is authenticated
+function checkAuthentication(req, res, next) {
+  if (!loggedDoctor) {
+    return res.status(401).json({ message: 'You are not logged in.' });
   }
+  req.loggedDoctor = loggedDoctor; // Attach loggedDoctor to req object
+  next();
 }
 
-// Configure Passport.js
-passport.use('doctor-local', new LocalStrategy(
-  { usernameField: 'email' },
-  async (email, password, done) => {
-    try {
-      console.time('login-query');
-      const doctor = await Doctor.findOne({ email });
-      console.timeEnd('login-query');
-      
-      if (!doctor) {
-        return done(null, false, { message: 'Email not registered' });
-      }
+// Route for doctor login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-      console.time('password-compare');
-      const isMatch = await bcrypt.compare(password, doctor.password);
-      console.timeEnd('password-compare');
-
-      if (!isMatch) {
-        return done(null, false, { message: 'Incorrect password' });
-      }
-
-      return done(null, doctor); // Successful authentication
-    } catch (err) {
-      return done(err);
-    }
-  }
-));
-
-// Serialize the doctor
-passport.serializeUser((user, done) => done(null, user.id));
-
-// Deserialize the doctor
-passport.deserializeUser(async (id, done) => {
   try {
-    console.time('deserialize-query');
-    const doctor = await Doctor.findById(id);
-    console.timeEnd('deserialize-query');
-    done(null, doctor);
-  } catch (err) {
-    done(err);
+    // Check if the doctor exists in the database
+    const doctor = await Doctor.findOne({ email });
+    if (!doctor) {
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const isMatch = await bcrypt.compare(password, doctor.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+
+    // Simulate login
+    loggedDoctor = { id: doctor._id, email: doctor.email, name: doctor.name };
+    res.redirect('/doctor/doctor-files');
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'An error occurred during login.' });
   }
 });
 
-// Routes
-router.get('/dashboard', isDoctor, (req, res) => {
-  res.render('doctor-dashboard');
+
+
+// Route for doctor logout
+router.post('/logout', (req, res) => {
+  loggedDoctor = null; // Clear logged-in doctor
+  res.json({ message: 'Logged out successfully' });
 });
 
+// Route to render the login page
 router.get('/login', (req, res) => {
   res.render('doctor-login');
 });
 
-// Define the Doctor Login Route
-router.post('/login', (req, res, next) => {
-  passport.authenticate('doctor-local', (err, doctor, info) => {
-    if (err) {
-      console.error('Error during login:', err);
-      return res.status(500).send('An error occurred during login.');
+// Route for patient files
+router.get('/doctor-files', checkAuthentication, async (req, res) => {
+  const doctorId = req.loggedDoctor.id; // Assuming the logged-in doctor's ID is in req.loggedDoctor
+
+  try {
+    // Fetch all files where the doctor ID matches the logged-in doctor
+    const files = await File.find({ doctor: doctorId })
+      .populate({
+        path: 'user', // Populate the user field (patient)
+        select: 'name email phoneNo profileImage allergies', // Select patient fields
+      })
+      .populate({
+        path: 'doctor', // Populate doctor field if needed (though this may be redundant as you already know the doctor)
+        select: 'name email',
+      });
+
+    if (!files || files.length === 0) {
+      return res.status(404).json({ message: 'No files found for this doctor' });
     }
-    if (!doctor) {
-      return res.render('doctor-login', { message: info.message || 'Invalid email or password' });
-    }
-    req.logIn(doctor, (err) => {
-      if (err) {
-        console.error('Error during session creation:', err);
-        return res.status(500).send('An error occurred while creating a session.');
+
+    // Map files to a more readable format
+    const doctorFiles = files.map(file => ({
+      fileName: file.file,
+      description: file.description,
+      status: file.status,
+      date: file.date,
+      patient: {
+        name: file.user.name,
+        email: file.user.email,
+        phoneNo: file.user.phoneNo,
+        profileImage: file.user.profileImage,
+        allergies: file.user.allergies,
+      },
+    }));
+
+    // Render doctor-dashboard with the files of the doctor
+    res.render('doctor-dashboard', {
+      doctor: {
+        name: req.loggedDoctor.name,
+        email: req.loggedDoctor.email,
+        files: doctorFiles, // List of files associated with the doctor
       }
-      res.redirect('/doctor/dashboard');
     });
-  });
+
+  } catch (err) {
+    console.error('Error fetching files for doctor:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

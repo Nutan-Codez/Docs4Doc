@@ -13,6 +13,11 @@ let doctorSchema = new mongoose.Schema({
         type: String,
         default:'default.jpg',
     },
+    patients:[{
+        type:mongoose.Schema.Types.ObjectId,
+        default:[],
+        ref:'User',
+    }]
 });
 
 const doctor = mongoose.model('doctor', doctorSchema);

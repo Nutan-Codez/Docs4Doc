@@ -7,12 +7,12 @@ const fileSchema = mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         required: true
     },
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'doctor',
         required: true
     },
     description: {

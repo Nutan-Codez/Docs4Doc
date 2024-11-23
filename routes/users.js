@@ -215,17 +215,16 @@ router.post('/bio', isLoggedIn, async (req, res) => {
     }
 
     // Calculate age
-
     const age = calculateAge(dateOfBirth);
 
     // Create a new Bio document
     const newBio = new bioModel({
       user: req.user._id, // Assuming `req.user` is populated by Passport.js
-      doctor:doctor,
-      dateOfBirth:dateOfBirth,
-      aadharNumber:aadharNumber,
-      contactNumber:contactNumber,
-      age:age,
+      doctor: doctor,
+      dateOfBirth: dateOfBirth,
+      aadharNumber: aadharNumber,
+      contactNumber: contactNumber,
+      age: age,
     });
 
     await newBio.save();
@@ -239,6 +238,16 @@ router.post('/bio', isLoggedIn, async (req, res) => {
     user.bio = newBio._id; // Link the new bio to the user
     await user.save();
 
+    // Update the doctor's `users` array (assuming the doctor has a `users` field)
+    const doctorDoc = await doctorModel.findById(doctor); // Find doctor by ID
+    if (!doctorDoc) {
+      return res.status(404).send('Doctor not found.');
+    }
+
+    // Push the user to the doctor's `users` array
+    doctorDoc.patients.push(user._id); // Assuming there's a `users` array in the doctor model
+    await doctorDoc.save();
+
     // Redirect to the profile page
     res.redirect('/profile');
   } catch (err) {
@@ -246,6 +255,7 @@ router.post('/bio', isLoggedIn, async (req, res) => {
     res.status(500).send('An error occurred while saving bio.');
   }
 });
+
 
 
 // Add Doctor Routes

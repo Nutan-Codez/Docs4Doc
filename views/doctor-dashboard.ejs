@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
-    <h1>Welcome, Dr. <%= doctor.name %>!</h1>
-    <p>Email: <%= doctor.email %></p>
-    <a href="/logout">Logout</a>
-</body>
+    <div class="container">
+        <header>
+            <h1>Welcome, <%= doctor.name %></h1>
+            <p>Email: <%= doctor.email %></p>
+        </header>
 
+        <section class="files">
+            <h2>Patient Files</h2>
+
+            <% if (doctor.files && doctor.files.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Patient Name</th>
+                            <th>Patient Email</th>
+                            <th>Patient Phone</th>
+                            <th>Allergies</th>
+                            <th>Uploaded On</th>
+                            <th>Preview</th> <!-- Add a column for previewing the file -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% doctor.files.forEach(file => { %>
+                            <tr>
+                                <td><a href="/uploads/<%= file.fileName %>" target="_blank"><%= file.fileName %></a></td>
+                                <td><%= file.description %></td>
+                                <td><%= file.status %></td>
+                                <td><%= file.patient.name %></td>
+                                <td><%= file.patient.email %></td>
+                                <td><%= file.patient.phoneNo %></td>
+                                <td><%= file.patient.allergies %></td>
+                                <td><%= new Date(file.date).toLocaleDateString() %></td>
+
+                                <!-- File Preview -->
+                                <td>
+                                    <% if (file.fileName.endsWith('.pdf')) { %>
+                                        <iframe src="/uploads/<%= file.fileName %>" width="300" height="200" frameborder="0"></iframe>
+                                    <% } else { %>
+                                        <p>No preview available</p>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No files found for this doctor.</p>
+            <% } %>
+        </section>
+    </div>
+</body>
 </html>
