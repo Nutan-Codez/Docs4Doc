@@ -11,9 +11,9 @@ const patientSchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
-    },
+        ref: 'User', // Correct reference to the `User` model
+        required: true,
+      },
     dateOfBirth: {
         type: Date,
         required: true
@@ -23,16 +23,11 @@ const patientSchema = new Schema({
         unique: true,
 
     },
-    doctor: {
-        name: {
-            type: String,
-            required: true
-        },
-        contactNumber: {
-            type: String,
+    doctor:
+        { type: mongoose.Schema.Types.ObjectId, 
+        ref: 'doctors' } // References to doctors
 
-        }
-    },
+    ,
     contactNumber: {
         type: String,
 

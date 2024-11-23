@@ -1,0 +1,10 @@
+planning to add:
+1.)doctor schema~
+2.)admin add doctor~
+3.)patient on upload select doctor~
+4.)doctor login
+4.5)bcrypt
+5.)report doctor
+6.)file status verified
+ 
+7.)optional(open connect,Oauth,).

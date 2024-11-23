@@ -1,4 +1,3 @@
-<!-- views/bio.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,32 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bio Information</title>
-    <link rel="stylesheet" href="../stylesheets/bio.css"> <!-- Include your CSS file here -->
+    <link rel="stylesheet" href="../stylesheets/bio.css">
 </head>
 
 <body>
-
     <div>
         <h1>Enter Bio Information</h1>
         <form action="/bio" method="POST">
-            <label for="doctorName">Doctor's Name:</label>
-            <input type="text" id="doctorName" name="doctorName" required>
-
-            <label for="doctorContactNumber">Doctor's Contact Number:</label>
-            <input type="text" id="doctorContactNumber" name="doctorContactNumber" pattern="\d{10}"
-                title="Contact Number should be 10 digits" optional>
-
+            <label for="doctor">Select Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <% doctors.forEach(doctor => { %>
+                    <option value="<%= doctor._id %>"><%= doctor.name %></option>
+                <% }); %>
+            </select>
 
             <label for="dateOfBirth">Date of Birth:</label>
             <input type="date" id="dateOfBirth" name="dateOfBirth" required>
 
             <label for="aadharNumber">Aadhar Number:</label>
-            <input type="text" id="aadharNumber" name="aadharNumber" pattern="\d{12}"
+            <input type="text" id="aadharNumber" name="aadharNumber" pattern="\d{12}" 
                 title="Aadhar Number should be 12 digits" required>
 
             <label for="contactNumber">Contact Number:</label>
-            <input type="text" id="contactNumber" name="contactNumber" pattern="\d{10}"
-                title="Contact Number should be 10 digits">
+            <input type="text" id="contactNumber" name="contactNumber" pattern="\d{10}" 
+                title="Contact Number should be 10 digits" required>
+
 
             <button type="submit">Submit</button>
         </form>

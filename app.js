@@ -6,6 +6,7 @@ var logger = require('morgan');
 var expressSession = require('express-session');
 const passport = require('passport');
 var indexRouter = require('./routes/index');
+const userModel = require('./routes/models/users'); 
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -17,14 +18,16 @@ app.set('view engine', 'ejs');
 app.use(expressSession({
   resave: false,
   saveUninitialized: false,
-  secret: "zindagijio"
-}))
+  secret: "hellobye"
+}));
 
-app.use(passport.initialize())
-app.use(passport.session())
-passport.serializeUser(usersRouter.serializeUser())
-passport.deserializeUser(usersRouter.deserializeUser())
-// 
+app.use(passport.initialize());
+app.use(passport.session());
+// Import the User model
+
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,7 +38,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 
 
 // catch 404 and forward to error handler

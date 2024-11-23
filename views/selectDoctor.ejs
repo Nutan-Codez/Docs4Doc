@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Doctor</title>
+</head>
+<body>
+  <h1>Select a Doctor</h1>
+
+  <form action="/select-doctor" method="POST">
+    <ul>
+      <% doctors.forEach(doctor => { %>
+        <li>
+          <input type="radio" id="<%= doctor._id %>" name="doctorId" value="<%= doctor._id %>" required>
+          <label for="<%= doctor._id %>">
+            <strong><%= doctor.name %></strong> (<%= doctor.email %>)
+          </label>
+        </li>
+      <% }) %>
+    </ul>
+    <button type="submit">Save Doctor</button>
+  </form>
+
+  <a href="/profile">Back to Profile</a>
+</body>
+</html>

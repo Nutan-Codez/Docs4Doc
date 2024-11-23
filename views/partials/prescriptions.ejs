@@ -1,16 +1,16 @@
-<% if (user.files.length > 0) { %>
-    <% user.files.forEach(function(file) { %>
+<% if (user.file.length > 0) { %>
+    <% user.file.forEach(function(f) { %>
         <div class="file-preview">
             <h4>
-                <% if (file.description && file.description.length > 0) { %>
-                    <%= file.description %>
+                <% if (f.description && f.description.length > 0) { %>
+                    <%= f.description %>
                 <% } else { %>
                     NO Description
                 <% } %>
             </h4>
-            <% console.log(user.files); %>
+            <% console.log(user.file); %>
             <h4><% 
-                var fileDate = new Date(file.date);
+                var fileDate = new Date(f.date);
                 
                 // Extract date components
                 var day = fileDate.getDate(); // Day of the month
@@ -21,7 +21,7 @@
                 var formattedDate = `${day}-${month}-${year}`; // Change format as needed
             %>
             <%= formattedDate %></h4>
-            <iframe src="/uploads/<%= file.file %>" type="application/pdf" width="100%" height="600px"></iframe>
+            <iframe src="/uploads/<%= f.file %>" type="application/pdf" width="100%" height="600px"></iframe>
         </div>
     <% }); %>
 <% } else { %>

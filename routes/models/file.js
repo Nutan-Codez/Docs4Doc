@@ -10,6 +10,11 @@ const fileSchema = mongoose.Schema({
         ref: 'user',
         required: true
     },
+    doctor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
+    },
     description: {
         type: String,
         maxlength: 500 // Example validation
@@ -18,10 +23,10 @@ const fileSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    Authority: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'doctors'
-    }]
+    status:{
+        type:String,
+        default:'Unverified',
+    }
 });
 
-module.exports = mongoose.model("file", fileSchema);
+module.exports = mongoose.model("File", fileSchema);
