@@ -8,7 +8,7 @@ const passport = require('passport');
 var indexRouter = require('./routes/index');
 const userModel = require('./routes/models/users'); 
 var usersRouter = require('./routes/users');
-
+var doctorRoutes = require('./routes/doctor');
 var app = express();
 
 // view engine setup
@@ -39,6 +39,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', indexRouter);
 app.use('/', usersRouter);
+app.use('/doctor', doctorRoutes);
 
 
 // catch 404 and forward to error handler

@@ -258,15 +258,30 @@ router.post('/add-doctor', isAdmin, profilePic.single('picture'), async (req, re
     const { name, email, password, phoneNo } = req.body;
     const picture = req.file ? req.file.filename : 'default.jpg';
 
+    // Validate phone number length
     if (phoneNo.length !== 10) {
       return res.status(400).send('Phone number must be 10 digits.');
     }
 
-    const newDoctor = new doctorModel({ name, email, password, phoneNo, picture });
+    // Hash the password with bcrypt
+    const saltRounds = 10; // Define the number of salt rounds
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Create new doctor document with hashed password
+    const newDoctor = new doctorModel({
+      name,
+      email,
+      password: hashedPassword, // Save hashed password
+      phoneNo,
+      picture,
+    });
+
+    // Save the new doctor to the database
     await newDoctor.save();
-    res.redirect('/add-doctor');
+    res.redirect('/add-doctor'); // Redirect after successful creation
   } catch (error) {
     if (error.code === 11000) {
+      // Handle duplicate email error
       res.status(400).send('Doctor with this email already exists.');
     } else {
       console.error(error);
@@ -274,7 +289,6 @@ router.post('/add-doctor', isAdmin, profilePic.single('picture'), async (req, re
     }
   }
 });
-
 // Admin Routes
 router.get('/admin-login', (req, res) => {
   res.render('admin-login');
@@ -303,7 +317,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
-
+router.get('/user-reports',(req,res)=>{res.render('finduser');})
 // Report Routes
 router.post('/user-reports', isAdmin, async (req, res) => {
   const aadharNumber = req.body.aadhar;
@@ -313,12 +327,12 @@ router.post('/user-reports', isAdmin, async (req, res) => {
       return res.render('error', { message: 'User not found with the given Aadhar number' });
     }
 
-    const user = await userModel.findById(bio.user).populate('files').populate('bio');
+    const user = await userModel.findById(bio.user).populate('file').populate('bio');
     if (!user) {
       return res.render('error', { message: 'User not found in the database' });
     }
 
-    res.render('admin', { user });
+    res.render('userReports', { user });
   } catch (err) {
     console.error('Error fetching user data:', err);
     res.status(500).send('An error occurred while fetching user data.');
@@ -353,6 +367,31 @@ router.post('/select-doctor', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.error('Error selecting doctor:', err);
     res.status(500).send('An error occurred while selecting the doctor.');
+  }
+});
+router.get('/profilechange', isLoggedIn, (req, res) => { res.render('Updateprofile') })
+router.post('/profilechange', isLoggedIn, profilePic.single('image'), async (req, res) => {
+  try {
+    // Find the user based on the session username
+    const user = await userModel.findOne({ username: req.session.passport.user });
+
+    // Check if the file was uploaded
+    if (req.file) {
+      // Update the user's profile image with the filename
+      user.profileImage = req.file.filename;
+    } else {
+      // Handle cases where no file was uploaded, if needed
+      console.log('No file uploaded');
+    }
+
+    // Save the updated user object
+    await user.save();
+
+    // Redirect to the profile page
+    res.redirect('/profile');
+  } catch (error) {
+    console.error('Error changing profile image:', error);
+    res.status(500).send('An error occurred while changing the profile image.');
   }
 });
 

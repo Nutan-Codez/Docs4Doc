@@ -111,19 +111,19 @@
         </div>
 
         <!-- Display user files (reports) -->
-        <% if (user.files && user.files.length > 0) { %>
-            <% user.files.forEach(function(file) { %>
+        <% if (user.file && user.file.length > 0) { %>
+            <% user.file.forEach(function(f) { %>
                 <div class="file-preview">
                     <h4>
-                        <% if (file.description && file.description.length > 0) { %>
-                            <%= file.description %>
+                        <% if (f.description && f.description.length > 0) { %>
+                            <%= f.description %>
                         <% } else { %>
                             No Description
                         <% } %>
                     </h4>
 
                     <% 
-                        var fileDate = new Date(file.date);
+                        var fileDate = new Date(f.date);
                         var day = fileDate.getDate();
                         var month = fileDate.getMonth() + 1; // 0-based months
                         var year = fileDate.getFullYear();
@@ -132,7 +132,7 @@
                     <h4><%= formattedDate %></h4>
 
                     <!-- Display the file (assuming PDF) -->
-                    <iframe src="/uploads/<%= file.file %>" type="application/pdf"></iframe>
+                    <iframe src="/uploads/<%= f.file %>" type="application/pdf"></iframe>
                 </div>
             <% }); %>
         <% } else { %>
