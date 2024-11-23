@@ -163,12 +163,12 @@ router.post('/upload', isLoggedIn, upload.single('file'), async (req, res) => {
     });
 
     // Ensure files array exists and associate the file with the user
-    if (!Array.isArray(user.files)) {
-      user.files = [];
+    if (!Array.isArray(user.file)) {
+      user.file = [];
     }
-    user.files.push(file._id); // Save only the file ID for reference
+    user.file.push(file._id); // Save only the file ID for reference
     await user.save();
-
+    console.log('uploaded file'+'')
     console.log('File uploaded successfully:', file);
     res.redirect('/profile');
   } catch (error) {
